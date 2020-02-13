@@ -4,7 +4,7 @@ services:
    para:
      image: erudikaltd/para
      ports:
-       - "8080:8080"
+       - "8090:8090"
      volumes:
        - type: volume
          source: paraData
@@ -21,9 +21,9 @@ services:
    scoold:
      depends_on:
        - para
-     image: erudikaltd/scoold
+     build: .
      ports:
-       - "8000:8000"
+       - "8091:8091"
      volumes:
        - type: bind
          source: ./scoold-application.conf
@@ -32,3 +32,4 @@ services:
      env_file: scoold.env
 volumes:
   paraData:
+  paraLib:
