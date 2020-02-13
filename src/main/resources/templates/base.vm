@@ -269,28 +269,13 @@
 					<div class="row mbn">
 						<div class="col l6 s12 sTextCenter">
 							<h5 class="white-text">
-								#if($showBranding)
-									Powered by <a href="https://paraio.com">
-										<img src="$imageslink/paradark.svg" width="100" alt="Para logo" class="para-logo-footer"></a>
-								#end
 							</h5>
 							<div class="pvl">
-								<a href="$aboutlink" title="About">$!{lang.get('about.title')}</a>&nbsp;&nbsp;
-								<a href="$feedbacklink" title="Feedback">$!{lang.get('feedback.title')}</a>&nbsp;&nbsp;
-								<a href="$privacylink" title="Privacy">$!{lang.get('privacy.title')}</a>&nbsp;&nbsp;
-								<a href="$termslink" title="Terms">$!{lang.get('terms.title')}</a>
 							</div>
 						</div>
 						<div class="col l6 s12 sTextCenter ${footerAlignClass}">
 							<div class="pvl white-text">
-								#if($showBranding)
-									Made with <i class="fa fa-coffee"></i> by
-									<a href="https://erudika.com"><b>Erudika</b></a>
-								#end
 							</div>
-							<a href="$!languageslink" title="Switch to a different language" class="btn-flat grey capitalize">
-								$!currentLocale.getDisplayLanguage($currentLocale)
-							</a>
 						</div>
 					</div>
 				</div>
@@ -298,9 +283,6 @@
 					<div class="container">
 						<div class="row mbn">
 							<div class="col s12 sTextCenter">
-								#set($_liclink = $utils.formatMessage("$!lang.get('license')",
-								'<a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons</a>') )
-								<i class="fa fa-creative-commons"></i> $_liclink
 							</div>
 						</div>
 					</div>
