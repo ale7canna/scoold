@@ -64,6 +64,7 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletException;
@@ -471,6 +472,25 @@ public final class ScooldUtils {
 		return Collections.emptySet();
 	}
 
+	private Set<String> getModeratorsEmails() {
+		Set<String> emails = new LinkedHashSet<>();
+		// find all user objects even if there are more than 10000 users in the system
+		Pager pager = new Pager(1, "_docid", false, Config.MAX_ITEMS_PER_PAGE);
+		List<Profile> profiles;
+		do {
+			profiles = pc.findQuery(Utils.type(Profile.class),
+					"*", pager);
+			Stream<Profile> moderators = profiles.stream()
+					.filter(p -> isMod(p));
+
+			List<User> users = pc.readAll(moderators.map(p -> p.getCreatorid()).
+					distinct().collect(Collectors.toList()));
+
+			users.stream().forEach(u -> emails.add(u.getEmail()));
+		} while (!profiles.isEmpty());
+		return emails;
+	}
+
 	@SuppressWarnings("unchecked")
 	public void sendUpdatedFavTagsNotifications(Post question, List<String> addedTags) {
 		// sends a notification to subscibers of a tag if that tag was added to an existing question
@@ -523,6 +543,7 @@ public final class ScooldUtils {
 
 			Set<String> emails = new HashSet<String>(getNotificationSubscribers(EMAIL_ALERTS_PREFIX + "new_post_subscribers"));
 			emails.addAll(getFavTagsSubscribers(question.getTags()));
+			emails.addAll(getModeratorsEmails());
 			sendEmailsToSubscribersInSpace(emails, question.getSpace(),
 					name + " posted the question '" + Utils.abbreviate(question.getTitle(), 255) + "'",
 					Utils.compileMustache(model, loadEmailTemplate("notify")));
