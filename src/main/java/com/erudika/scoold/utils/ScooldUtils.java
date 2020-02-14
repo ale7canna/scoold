@@ -558,6 +558,8 @@ public final class ScooldUtils {
 			Set<String> emails = new HashSet<String>(getNotificationSubscribers(EMAIL_ALERTS_PREFIX + "new_post_subscribers"));
 			emails.addAll(getFavTagsSubscribers(question.getTags()));
 			emails.addAll(getModeratorsEmails());
+			emails.remove(postAuthor.getUser().getEmail());
+
 			sendEmailsToSubscribersInSpace(emails, question.getSpace(),
 					name + " posted the question '" + Utils.abbreviate(question.getTitle(), 255) + "'",
 					Utils.compileMustache(model, loadEmailTemplate("notify")));
