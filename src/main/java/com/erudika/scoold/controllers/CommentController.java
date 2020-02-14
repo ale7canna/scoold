@@ -158,6 +158,9 @@ public class CommentController {
 					model.put("logourl", Config.getConfigParam("small_logo_url", "https://scoold.com/logo.png"));
 					model.put("heading", Utils.formatMessage("New comment on <a href='{0}'>{1}</a>", postURL, parentPost.getTitle()));
 					model.put("body", Utils.formatMessage("<h2>{0} {1}:</h2><div class='panel'>{2}</div>", pic, name, body));
+					model.put("applicationUrl", getServerURL());
+					model.put("applicationName", Config.APP_NAME);
+
 					emailer.sendEmail(Arrays.asList(author.getEmail()), name + " commented on your post",
 							Utils.compileMustache(model, utils.loadEmailTemplate("notify")));
 				}

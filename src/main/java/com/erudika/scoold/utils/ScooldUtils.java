@@ -320,6 +320,8 @@ public final class ScooldUtils {
 			model.put("logourl", Config.getConfigParam("small_logo_url", "https://scoold.com/logo.png"));
 			model.put("heading", Utils.formatMessage(lang.get("signin.welcome.title"), user.getName()));
 			model.put("body", body1 + body2 + body3);
+			model.put("applicationUrl", getServerURL());
+			model.put("applicationName", Config.APP_NAME);
 			emailer.sendEmail(Arrays.asList(user.getEmail()), subject,
 					Utils.compileMustache(model, loadEmailTemplate("notify")));
 		}
@@ -338,6 +340,9 @@ public final class ScooldUtils {
 			model.put("logourl", Config.getConfigParam("small_logo_url", "https://scoold.com/logo.png"));
 			model.put("heading", lang.get("hello"));
 			model.put("body", body1 + body2 + body3);
+			model.put("applicationUrl", getServerURL());
+			model.put("applicationName", Config.APP_NAME);
+
 			emailer.sendEmail(Arrays.asList(email), subject, Utils.compileMustache(model, loadEmailTemplate("notify")));
 		}
 	}
@@ -513,6 +518,8 @@ public final class ScooldUtils {
 			model.put("heading", Utils.formatMessage("{0} {1} edited:", picture, name));
 			model.put("body", Utils.formatMessage("<h2><a href='{0}'>{1}</a></h2><div>{2}</div><br>{3}",
 					postURL, question.getTitle(), body, tagsString));
+			model.put("applicationUrl", getServerURL());
+			model.put("applicationName", Config.APP_NAME);
 
 			Set<String> emails = getFavTagsSubscribers(addedTags);
 			sendEmailsToSubscribersInSpace(emails, question.getSpace(),
@@ -536,6 +543,8 @@ public final class ScooldUtils {
 			model.put("heading", Utils.formatMessage("{0} {1} posted:", picture, name));
 			model.put("body", Utils.formatMessage("<h2><a href='{0}'>{1}</a></h2><div>{2}</div><br>{3}",
 					postURL, question.getTitle(), body, tagsString));
+			model.put("applicationUrl", getServerURL());
+			model.put("applicationName", Config.APP_NAME);
 
 			if (postsNeedApproval() && question instanceof UnapprovedQuestion) {
 				Report rep = new Report();
@@ -567,6 +576,8 @@ public final class ScooldUtils {
 			model.put("logourl", Config.getConfigParam("small_logo_url", "https://scoold.com/logo.png"));
 			model.put("heading", Utils.formatMessage("New reply to <a href='{0}'>{1}</a>", postURL, parentPost.getTitle()));
 			model.put("body", Utils.formatMessage("<h2>{0} {1}:</h2><div>{2}</div>", picture, name, body));
+			model.put("applicationUrl", getServerURL());
+			model.put("applicationName", Config.APP_NAME);
 
 			Profile authorProfile = pc.read(parentPost.getCreatorid());
 			if (authorProfile != null) {
