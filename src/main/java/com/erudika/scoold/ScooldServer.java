@@ -149,9 +149,11 @@ public class ScooldServer extends SpringBootServletInitializer {
 	 * @return the host URL of this Scoold server
 	 */
 	public static String getServerURL() {
-		String defaultHost = "http://localhost:" + getServerPort();
-		String host = Config.getConfigParam("host_url", defaultHost);
-		return StringUtils.removeEnd(host, "/");
+		return StringUtils.removeEnd(
+				Config.getConfigParam("host_external_url",
+						Config.getConfigParam(
+								"host_url",
+								"http://localhost:" + getServerPort())), "/");
 	}
 
 	/**
