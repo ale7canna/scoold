@@ -250,6 +250,11 @@ public final class ScooldUtils {
 			authUser.setTimestamp(u.getTimestamp());
 			authUser.setGroups(isRecognizedAsAdmin(u)
 					? User.Groups.ADMINS.toString() : u.getGroups());
+			authUser.setCommentEmailsEnabled(true);
+			authUser.setReplyEmailsEnabled(true);
+			authUser.setFavtagsEmailsEnabled(true);
+			subscribeToNewPosts(u);
+
 			// auto-assign spaces to new users
 			String space = Config.getConfigParam("auto_assign_spaces", "");
 			if (!StringUtils.isBlank(space) && !isDefaultSpace(space)) {
